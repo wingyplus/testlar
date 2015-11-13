@@ -5,18 +5,22 @@
 
 #include "testlar/testing.h"
 
+#define TEST_FAIL 1
+#define TEST_PASS 0
+
 int _run(test_t *test) {
+  int ret;
   testing_t *t = (testing_t *)malloc(sizeof(testing_t));
 
   test->fn(t);
   if (t->finished && t->failed) {
     free(t->output);
-    free(t);
-    return 1;
+    ret = TEST_FAIL;
   }
 
+  ret = TEST_PASS;
   free(t);
-  return 0;
+  return ret;
 }
 
 int _t_run(test_t tests[], int len) {
