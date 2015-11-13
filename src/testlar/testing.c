@@ -10,6 +10,8 @@ int _run(test_t *test) {
 
   test->fn(t);
   if (t->finished && t->failed) {
+    free(t->output);
+    free(t);
     return 1;
   }
 
